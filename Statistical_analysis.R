@@ -63,7 +63,7 @@ df_filtered <- df_filtered |>
 
 mixed_models_figure <- 
   ggplot(df_filtered, aes(x = rt, y = congruency, fill = task)) +
-  stat_halfeye(adjust = 0.5, width = 0.6, .width = 0.98, justification = -0.2, point_interval = mean_qi, alpha = 0.5) +
+  stat_halfeye(adjust = 0.5, width = 0.6, .width = 0.98, justification = -0.2, point_interval = mean_qi, alpha = 0.9) +
   geom_point(aes(x = predicted), position = position_jitter(width = 0.1, height = 0), color = "black", size = 1.5) +
   labs(title = "Raincloud Plot for Reaction Time by Congruency and Task",
        x     = "Reaction time (ms)",
