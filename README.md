@@ -8,7 +8,7 @@ This script proccesses the collected Stroop task data, binding individual files 
 ### 2. Pre-processing script from raw to filtered data
 This script proccesses the raw Stroop task data, filters NA trials of subjects and summarizes the number of filtered trials. 
 ### 3. Statistical analyses of the Stroop task
-This scripts analyzes:
+This scripts performs:
 - Descriptive statistics of both reaction time and accuracy, by task type (ink naming or word reading) and congruency (color and word are congruent or incongruent). 
 - Descriptive plots for reaction time and accuracy:
 ![Descriptive Plot](descriptive_figures.png)
