@@ -9,30 +9,47 @@
 
 library(dplyr)
 library(ggplot2)
-library(ggdist)
+library(patchwork)
 library(lme4)
 
 load('./filtered_data.rdata')
 
 ### DESCRIPTIVE STATISTICS -----------------------------------------------------
-descriptives <- df_filtered |>
-  group_by(congruency, task, accuracy) |>
+## Reaction time by congruency and task
+descriptives_rt <- df_filtered |>
+  group_by(congruency, task) |>
   summarise(
     mean_rt = mean(rt),
     sd_rt   = sd(rt))
 
 # Descriptive plot for reaction time by congruency and task
-ggplot(df_filtered, aes(x = congruency, y = rt, fill = accuracy, color = accuracy)) +
-  stat_halfeye(adjust = 0.5, justification = -0.1, .width = 0, alpha = 0.4) +
-  geom_boxplot(width = 0.1, alpha = 0.7) +
-  geom_jitter(width = 0.1, alpha = 0.4) +
-  geom_point(data = descriptives, aes(x = congruency, y = mean_rt), size = 4, color = "black") +
-  facet_wrap(~ task) +
-  labs(
-    title = "Raincloud plot of reaction time by congruency and task",
-    x     = "Congruency",
-    y     = "Reaction Time (RT)") +
+rt_descriptive_figure <- 
+  ggplot(descriptives_rt, aes(x = congruency, y = mean_rt, fill = task)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean_rt - sd_rt, ymax = mean_rt + sd_rt), width = 0.2, position = position_dodge(0.9)) +
+  labs(title = "Mean Reaction Time by Congruency and Task",
+       x     = "Congruency",
+       y     = "Mean reaction time (ms)") +
   theme_minimal()
+
+## Accuracy by congruency and task
+descriptives_accuracy <- df_filtered |>
+  group_by(congruency, task) |>
+  summarise(
+    n_accurate   = sum(accuracy == "accurate"),
+    n_inaccurate = sum(accuracy == "inaccurate"))
+
+# Descriptive plot for accuracy by congruency and task
+accuracy_descriptive_figure <- 
+  ggplot(descriptives_accuracy, aes(x = congruency, fill = task)) +
+  geom_bar(stat = "identity", position = "dodge", aes(y = n_accurate)) +
+  labs(title = "Number of Accurate Responses by Congruency and Task",
+       x     = "Congruency",
+       y     = "Count of accurate responses") +
+  theme_minimal()
+
+descriptive_figures <- rt_descriptive_figure + accuracy_descriptive_figure
+ggsave("descriptive_figures.png", descriptive_figures, width = 15, height = 8)
 
 ### MIXED EFFECT REGRESSION ----------------------------------------------------
 ## For predicating reaction time by congruency and type
