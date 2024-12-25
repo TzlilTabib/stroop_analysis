@@ -1,6 +1,11 @@
-# R course for beginners 
-# Week 7 part 3
-# Assignment by Tzlil Tabib
+# ------------------------------------------------------------------------------
+## Script name: Statistical analyses of the Stroop task 
+## Description: This script - 
+# (1) Prepares and presents the Stroop task descriptive statistics 
+# (2) Performs mixed linear regression analysis 
+## Author: Tzlil Tabib
+## Date: 25.12.2024  
+# ------------------------------------------------------------------------------
 
 library(dplyr)
 library(ggplot2)

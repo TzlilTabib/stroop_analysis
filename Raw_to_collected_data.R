@@ -1,6 +1,11 @@
-# R course for beginners 
-# Week 7 part 2
-# Assignment by Tzlil Tabib
+# ----------------------------------------------------------------------------------
+## Script name: Pre-processing of the Collected Stroop data
+## Description: This script - 
+# (1) Filters NA subjects' trials from raw data  
+# (2) Summarizes the percentage of remaining trials for each subject after filtering 
+## Author: Tzlil Tabib
+## Date: 25.12.2024  
+# ----------------------------------------------------------------------------------
 
 library(dplyr)
 
