@@ -11,6 +11,7 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 library(lme4)
+library(ggdist)
 
 load('./filtered_data.rdata')
 
@@ -55,3 +56,19 @@ ggsave("descriptive_figures.png", descriptive_figures, width = 15, height = 8)
 ## For predicating reaction time by congruency and type
 model <- lmer(rt ~ congruency * task + (1 | subject), data = df_filtered)
 summary(model)
+
+# Presenting the model's predicted rt by the predicting factors and observed results 
+df_filtered <- df_filtered |>
+  mutate(predicted = predict(model))
+
+mixed_models_figure <- 
+  ggplot(df_filtered, aes(x = rt, y = congruency, fill = task)) +
+  stat_halfeye(adjust = 0.5, width = 0.6, .width = 0.98, justification = -0.2, point_interval = mean_qi, alpha = 0.5) +
+  geom_point(aes(x = predicted), position = position_jitter(width = 0.1, height = 0), color = "black", size = 1.5) +
+  labs(title = "Raincloud Plot for Reaction Time by Congruency and Task",
+       x     = "Reaction time (ms)",
+       y     = "Congruency") +
+  theme_minimal()
+
+ggsave("mixed_models_figure.png", mixed_models_figure, width = 15, height = 8)
+
