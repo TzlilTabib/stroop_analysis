@@ -1,6 +1,6 @@
 # R course for beginners 
 # Week 7 part 3
-# Assignment by Tzlil Tabib, id 208744755
+# Assignment by Tzlil Tabib
 
 library(dplyr)
 library(ggplot2)
@@ -13,8 +13,8 @@ load('./filtered_data.rdata')
 descriptives <- df_filtered |>
   group_by(congruency, task, accuracy) |>
   summarise(
-    mean_rt       = mean(rt),
-    sd_rt         = sd(rt))
+    mean_rt = mean(rt),
+    sd_rt   = sd(rt))
 
 # Descriptive plot for reaction time by congruency and task
 ggplot(df_filtered, aes(x = congruency, y = rt, fill = accuracy, color = accuracy)) +

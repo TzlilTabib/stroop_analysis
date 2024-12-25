@@ -1,6 +1,6 @@
 # R course for beginners 
 # Week 8 part 1
-# Assignment by Tzlil Tabib, id 208744755
+# Assignment by Tzlil Tabib
 
 library(dplyr)
 
